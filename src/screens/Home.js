@@ -1,48 +1,51 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Main from "./tabs/Main";
-import Settings from "./tabs/Settings";
-import About from "./tabs/About";
-import History from "./tabs/History";
-import { AntDesign } from "@expo/vector-icons";
 
-const Tab = createBottomTabNavigator();
+const Home = () => {
+  const users = [
+    { name: "Kofi", age: 12 },
+    { name: "Kwame", age: 14 },
+    { name: "Mary", age: 13 },
+  ];
 
-const Home = (props) => {
+  const navigation = useNavigation();
+
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Main" component={Main} />
-      <Tab.Screen
-        name="Settings"
-        component={Settings}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="setting" size={size} color={color} />
-          ),
-        }}
+    <View style={styles.container}>
+      <FlatList
+        data={users}
+        keyExtractor={(item, index) => index}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("Details", {
+                userInfo: item,
+              })
+            }
+            style={{
+              padding: 16,
+              marginVertical: 2,
+              backgroundColor: "tomato",
+            }}
+          >
+            <Text>{item.name}</Text>
+          </TouchableOpacity>
+        )}
       />
-      <Tab.Screen name="About" component={About} />
-      <Tab.Screen name="History" component={History} />
-    </Tab.Navigator>
+    </View>
   );
-  // const navigation = useNavigation();
-
-  // return (
-  //   <View style={styles.container}>
-  //     <TouchableOpacity onPress={() => navigation.navigate("Details")}>
-  //       <Text>Go to Details</Text>
-  //     </TouchableOpacity>
-  //   </View>
-  // );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
 

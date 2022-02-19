@@ -1,13 +1,15 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-
+import { useNavigation } from "@react-navigation/native";
 const Details = (props) => {
-  console.log(props.route.params.name);
+  const userInfo = props.route.params.userInfo;
+
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      <Text>Details</Text>
-      <TouchableOpacity onPress={() => props.navigation.goBack()}>
+      <Text>{userInfo.name}</Text>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
         <Text>Go back</Text>
       </TouchableOpacity>
     </View>
